@@ -23,11 +23,13 @@ class AutocompleteController < ApplicationController
 
   private
 
+
   def check_params
     if params[:prefix].nil?
       render json: {error: 'Please provide a string to complete.'}, status: :bad_request
     end
   end
+
 
   def build_name_tree
     if Names.name_tree.blank?

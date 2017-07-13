@@ -1,21 +1,18 @@
 class Names < ApplicationRecord
-  @@names = Names.order(:name)
+  @@names = Names.order(:name).map(&:name)
   @@tree = {}
 
-
-  def self.names_table
-    @@names
-  end
 
   def self.add_names(names)
     added_counter = 0
     names.split(',').collect(&:strip).each do |name|
-      if !@@names.exists?(name: name)
+      if !@@names.include?(name)
         added_counter += 1
         Names.create(name: name)
       end
     end
     if added_counter > 0
+      @@names = Names.order(:name).map(&:name)
       @@tree = {}
     end
     added_counter
@@ -44,7 +41,7 @@ class Names < ApplicationRecord
 
   def self.build_name_tree
     @@names.each do |name|
-      insert_word(@@tree, name.name)
+      insert_word(@@tree, name)
     end
 
     @@tree
