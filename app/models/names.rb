@@ -3,28 +3,42 @@ class Names < ApplicationRecord
   @@tree = {}
 
 
+  def self.names_table
+    @@names
+  end
+
+  def self.add_names(names)
+    added_counter = 0
+    names.split(',').collect(&:strip).each do |name|
+      if !@@names.exists?(name: name)
+        added_counter += 1
+        Names.create(name: name)
+      end
+    end
+    if added_counter > 0
+      @@tree = {}
+    end
+    added_counter
+  end
+
+
   def self.autocomplete(prefix)
-    current = @@tree
+    current_node = @@tree
 
     prefix.each_char do |c|
-      if current[c].nil?
+      if current_node[c].nil?
         return nil
       end
-      current = current[c]
+      current_node = current_node[c]
     end
 
     words = []
-    return build_results(current, '', words)
+    return build_results(current_node, '', words)
   end
 
 
   def self.name_tree
     @@tree
-  end
-
-
-  def self.print_tree
-    pp @@tree
   end
 
 
@@ -41,7 +55,6 @@ class Names < ApplicationRecord
 
 
   def self.insert_word(sub_tree, word)
-    # pp "#{sub_tree}, #{word}"
     if word.blank?
       return sub_tree
     end
@@ -49,14 +62,12 @@ class Names < ApplicationRecord
     char = word[0]
     word[0] = ''
 
-
     if sub_tree[char].nil?
       sub_tree[char] = {}
     end
 
     new_node = sub_tree[char]
     sub_tree[char] = self.insert_word(new_node, word)
-
 
     return sub_tree
   end
