@@ -7,5 +7,15 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/AutocompleteAPI_development</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="d8qtidijtgpl9h@ec2-54-163-254-143.compute-1.amazonaws.com" uuid="a199d5e3-83be-4dee-80e9-6593e84a348a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-54-163-254-143.compute-1.amazonaws.com:5432/d8qtidijtgpl9h</jdbc-url>
+      <driver-properties>
+        <property name="sslfactory" value="org.postgresql.ssl.NonValidatingFactory" />
+        <property name="ssl" value="true" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>

@@ -4,6 +4,7 @@ class AutocompleteController < ApplicationController
 
   def show
     prefix = params[:prefix]
+    pp Names.name_tree
     result = Names.autocomplete(prefix)
 
     render json: result
